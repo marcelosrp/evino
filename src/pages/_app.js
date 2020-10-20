@@ -7,6 +7,7 @@ import GlobalStyle from "../globalStyles";
 // Import Swiper styles
 import "swiper/swiper.scss";
 import "swiper/components/navigation/navigation.scss";
+import "swiper/components/pagination/pagination.scss";
 
 Router.events.on("routeChangeStart", () => NProgress.start());
 Router.events.on("routeChangeComplete", () => NProgress.done());

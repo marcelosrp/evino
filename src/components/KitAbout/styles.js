@@ -13,6 +13,10 @@ export const Wrapper = styled.section`
     font-weight: 400;
     margin: 0 0 70px 20px;
     width: 100%;
+
+    @media (max-width: 660px) {
+      margin: 0 0 20px 20px;
+    }
   }
 `;
 
@@ -22,8 +26,16 @@ export const SwipperContentWrapper = styled.div`
   justify-content: space-evenly;
   width: 100%;
 
+  @media (max-width: 660px) {
+    flex-flow: column;
+  }
+
   > div {
     margin: 0 20px;
+
+    @media (max-width: 660px) {
+      margin: 20px 20px 0 20px;
+    }
   }
 `;
 

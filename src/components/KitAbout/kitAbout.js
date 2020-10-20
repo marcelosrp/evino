@@ -5,7 +5,7 @@ import { GiNoseFront } from "react-icons/gi";
 import { GiLips } from "react-icons/gi";
 import { GiKnifeFork } from "react-icons/gi";
 import { Swiper, SwiperSlide } from "swiper/react";
-import SwiperCore, { Navigation } from "swiper";
+import SwiperCore, { Navigation, Pagination } from "swiper";
 import {
   Wrapper,
   SwipperContentWrapper,
@@ -14,14 +14,19 @@ import {
   SwiperInfoItens,
 } from "./styles";
 
-SwiperCore.use([Navigation]);
+SwiperCore.use([Navigation, Pagination]);
 
 const KitAbout = ({ bundleProducts }) => {
   return (
     <Wrapper>
       <h1>Sobre o Kit</h1>
 
-      <Swiper spaceBetween={50} slidesPerView={1} navigation>
+      <Swiper
+        spaceBetween={50}
+        slidesPerView={1}
+        navigation
+        pagination={{ clickable: true }}
+      >
         {bundleProducts.map((item) => (
           <SwiperSlide key={item.name}>
             <SwipperContentWrapper>

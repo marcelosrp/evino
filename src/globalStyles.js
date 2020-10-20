@@ -32,6 +32,13 @@ const GlobalStyle = createGlobalStyle`
   button:focus {
     outline: none;
   }
+
+  @media (max-width: 660px) {
+    .swiper-button-next,
+    .swiper-button-prev {
+      display: none;
+    }
+  }
 `;
 
 export default GlobalStyle;
