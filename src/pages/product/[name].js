@@ -8,7 +8,14 @@ import ProductSommelier from "../../components/ProductSommelier/productSommelier
 import ProductAbout from "../../components/ProductAbout/productAbout";
 import KitAbout from "../../components/KitAbout/kitAbout";
 import Loading from "../../components/Helpers/loading";
-import { MainProduct } from "./styles";
+import styled from "styled-components";
+
+const MainProduct = styled.section`
+  margin: 0 auto;
+  max-width: 100%;
+  padding: 0 15px;
+  width: 1140px;
+`;
 
 const Product = ({ product }) => {
   const router = useRouter();
