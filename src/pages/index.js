@@ -1,4 +1,5 @@
 import React from "react";
+import Error from "next/error";
 import HeadSite from "../components/Head/head";
 import Layout from "../components/Layout/layout";
 import ProductItem from "../components/ProductItem/productItem";
@@ -14,7 +15,9 @@ const ProductListWrrapper = styled.section`
   width: 1140px;
 `;
 
-const Home = ({ products }) => {
+const Home = ({ products, error }) => {
+  if (error) return <Error statusCode={error} />;
+
   return (
     <Layout>
       <HeadSite
@@ -45,21 +48,19 @@ const Home = ({ products }) => {
 };
 
 export async function getServerSideProps(context) {
-  const products = await fetch("https://api.evino.com.br/catalog/v2/product")
-    .then((response) => {
-      if (response.ok) {
-        return response.json();
-      }
+  let error = "";
+  let products = [];
 
-      throw new Error("Deu problema");
-    })
-    .then((response) => response)
-    .catch((err) => {
-      console.log(err);
-    });
+  const res = await fetch("https://api.evino.com.br/catalog/v2/product");
+
+  if (res.status === 404) {
+    error = "Um erro foi encontrado, atualize a página para tentar novamente.";
+  } else {
+    products = await res.json();
+  }
 
   return {
-    props: { products },
+    props: { error, products },
   };
 }
 

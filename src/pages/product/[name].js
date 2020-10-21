@@ -1,5 +1,7 @@
 import React from "react";
+import Error from "next/error";
 import { useRouter } from "next/router";
+import DefaultErrorPage from "next/error";
 import HeadSite from "../../components/Head/head";
 import Layout from "../../components/Layout/layout";
 import ProductSummary from "../../components/ProductSummary/productSummary";
@@ -17,12 +19,14 @@ const MainProduct = styled.section`
   width: 1140px;
 `;
 
-const Product = ({ product }) => {
+const Product = ({ error, product }) => {
   const router = useRouter();
 
   if (router.isFallback) {
     return <Loading />;
   }
+
+  if (error) return <Error statusCode={error} />;
 
   return (
     <Layout>
@@ -93,7 +97,7 @@ export async function getStaticPaths() {
         return response.json();
       }
 
-      throw new Error("Deu problema");
+      throw new Error("Ocorreu uma erro na requisição.");
     })
     .then((response) => response);
 
@@ -110,20 +114,21 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
-  const product = await fetch(
-    `https://api.evino.com.br/catalog/v2/product/${params.name}`
-  )
-    .then((response) => {
-      if (response.ok) {
-        return response.json();
-      }
+  let error = "";
+  let product = [];
 
-      throw new Error("Deu problema");
-    })
-    .then((response) => response);
+  const res = await fetch(
+    `https://api.evino.com.br/catalog/v2/product/${params.name}`
+  );
+
+  if (res.status === 404) {
+    error = "Um erro foi encontrado, atualize a página para tentar novamente.";
+  } else {
+    product = await res.json();
+  }
 
   return {
-    props: { product },
+    props: { product, error },
     revalidate: 1,
   };
 }
